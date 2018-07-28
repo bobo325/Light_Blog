@@ -7,7 +7,8 @@
 @contact: 1126531273@qq.com
 @time: 2018/05/15 14:05
 """
-
+# C:\>mysql -u root -p
+# Enter password: ******
 db_config = {
     "url": "mysql://root:chenbo@localhost:3306/blog"
     # "url": "mysql+mysqldb://root:chenbo@localhost/blog"

@@ -18,11 +18,12 @@ class User(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(255))
     password = Column(String(255))
-
-    def __inits__(self, id, username, password):
-        self.id = id
-        self.username = username
-        self.password = password
+    # establish contact with post's foreignkey:user_id
+    post = db.relationship(
+        'Post',
+        backref='user',
+        lazy='dynamic'
+    )
 
     def __init__(self, username, password):
         self.username = username
@@ -38,7 +39,7 @@ class User(db.Model):
 
 
 class UserSchema(Schema):
-    id = fields.Integer()
+    id = fields.Integer(required=True)
     username = fields.String()  # default='chenbo'
     password = fields.String()  # default='123456'
 

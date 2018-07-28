@@ -20,7 +20,7 @@ class ProdConfig(Config):
 class DevConfig(Config):
     """Development config class."""
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@localhost:3306/blog"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@localhost:3306/light_blog"
 
 
 # #!/usr/bin/env python

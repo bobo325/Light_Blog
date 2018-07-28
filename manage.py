@@ -7,9 +7,12 @@
 """
 from flask_script import Manager, Server
 
-import app
+import model
+import run
+from model.post import Post
+from model.user import User
 
-manager = Manager(app.app)
+manager = Manager(run.app)
 
 # Create a new commands: server
 # This command will be run the Flask development_env server
@@ -24,7 +27,11 @@ def make_shell_context():
     type: 'Dict'
     """
     # 确保有导入Flask app object, 否则启动的CLI上下问中仍然没有app对象
-    return dict(app=app.app)
+    # return dict(app=run.app)
+    return dict(app=run.app,
+                db=model.db,
+                User=model.user.User,
+                Post=model.post.Post)
 
 """
 通过manager.py来执行命令行是十分有必要的， 因为一些Flask的扩展只有
