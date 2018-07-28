@@ -9,6 +9,7 @@ from flask_script import Manager, Server
 
 import model
 import run
+from model.comment import Comment
 from model.post import Post
 from model.user import User
 
@@ -31,7 +32,8 @@ def make_shell_context():
     return dict(app=run.app,
                 db=model.db,
                 User=model.user.User,
-                Post=model.post.Post)
+                Post=model.post.Post,
+                Comment=model.comment.Comment)
 
 """
 通过manager.py来执行命令行是十分有必要的， 因为一些Flask的扩展只有
