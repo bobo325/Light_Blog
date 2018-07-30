@@ -1,0 +1,26 @@
+Jinja: 是Python实现的模板语言。
+模板语言: 是一种被设计出来自动生成文档的简单文本格式。在模板语言中，一般都会吧一些变量传给模板，
+来替换模板中特定位置上预先定义好的占位变量名。向相同的模板文件（HTML+Python）传入不同的变量，
+达到生成格式相同但内容不同的网页文件，这个生成的过程被称之为渲染。
+
+Jinja中的变量名都会定义在{{ variables }}， {{}}被称之为变量代码块
+eg：
+<h1> {{user.username}} </h1>
+变量代码块中是任意的Python对象或类型，唯一的条件就是{{}}中的变量必须能够被Python的str()
+内置方法转换成一个String类型对象。(__str__会覆盖__repr__)
+
+
+NOTE 1：在 Jinja 中需要同时使用循环语句和 if 语句来模拟 continue 语句的功能。
+{% for post in posts if post.text %}
+    <div>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text | safe }}</p>
+    </div>
+{% endfor %}
+
+
+
+兼容JavaScript
+{% raw %}
+JavaScript statements
+{% endraw %}

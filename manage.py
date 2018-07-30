@@ -5,19 +5,26 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
+from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Server
 
 import model
 import run
 from model.comment import Comment
 from model.post import Post
+from model.tag import Tag
 from model.user import User
 
+# Init manager object via app object
 manager = Manager(run.app)
+
+# Init migrate object via app and db object
+migrate = Migrate(run.app, model.db)
 
 # Create a new commands: server
 # This command will be run the Flask development_env server
 manager.add_command("server", Server())
+manager.add_command("db", MigrateCommand)
 
 
 @manager.shell
@@ -34,7 +41,7 @@ def make_shell_context():
                 User=model.user.User,
                 Post=model.post.Post,
                 Comment=model.comment.Comment,
-                Tag=model.tag.Tag)
+                Tag=model.tag.Tag)   # post_tag 代表了两张表之间的关联，会由数据库自身来进行处理。
 
 """
 通过manager.py来执行命令行是十分有必要的， 因为一些Flask的扩展只有
