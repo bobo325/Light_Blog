@@ -46,3 +46,4 @@ class UserSchema(Schema):
     @post_load
     def make_entity(self, data):
         return User(**data)
+

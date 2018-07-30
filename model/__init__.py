@@ -9,4 +9,4 @@ from flask_sqlalchemy import SQLAlchemy
 
 from run import app
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app)  # 启动sqlalchemy
