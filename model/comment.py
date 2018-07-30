@@ -17,11 +17,11 @@ class Comment(db.Model):
     """每一篇文章都对应很多评论（1：n）"""
 
     __tablename__ = 'comment'
-    id = Column(Integer, primary_key=True,autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255))
     text = Column(Text)
     date = Column(DateTime, default=datetime.now())
-    post_id = db.Column(db.String(45), db.ForeignKey('post.id'))
+    post_id = db.Column(Integer, db.ForeignKey('post.id'))
 
     def __init__(self, name, text, date, post_id):
         self.name = name

@@ -6,15 +6,16 @@
 @time: 2018/7/28 11:53
 """
 from marshmallow import Schema, fields, post_load
+from sqlalchemy import Integer, String, Column
 
 from model import db
 
 
 class Tag(db.Model):
     """标签表，不同文章可以对应不同的标签"""
-    __tablename__ = 'tags'
-    id = db.Column(db.String(45), primary_key=True)
-    name = db.Column(db.String(255))
+    __tablename__ = 'tag'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255))
 
     def __init__(self, name):
         self.name = name

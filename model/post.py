@@ -10,7 +10,7 @@ from datetime import datetime
 from marshmallow import Schema, fields, post_load
 from sqlalchemy import DateTime, Column, String, Text, Integer
 
-from model import db
+from model import db, post_tag
 
 
 class Post(db.Model):
@@ -23,10 +23,15 @@ class Post(db.Model):
     # Set the foreign key for Post
     user_id = db.Column(Integer(), db.ForeignKey('user.id'))  # 外键foreignKey
     # 如果没指定__tablename__属性，那么上一句:ForeignKey('User.id'),即和py文件对应
-    coments = db.relationship(
+    coment = db.relationship(
         'Comment',
         backref='post',
         lazy='dynamic'
+    )
+    tag = db.relationship(
+        'Tag',
+        secondary=post_tag,
+        backref=db.backref('post', lazy='dynamic')
     )
 
     def __init__(self, title, text, publish_date, user_id):

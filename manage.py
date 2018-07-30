@@ -33,7 +33,8 @@ def make_shell_context():
                 db=model.db,
                 User=model.user.User,
                 Post=model.post.Post,
-                Comment=model.comment.Comment)
+                Comment=model.comment.Comment,
+                Tag=model.tag.Tag)
 
 """
 通过manager.py来执行命令行是十分有必要的， 因为一些Flask的扩展只有
