@@ -5,6 +5,8 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
+import json
+
 from flask import render_template
 from sqlalchemy import func
 
@@ -38,7 +40,7 @@ def sidebar_data():
 @app.route('/')
 def hello_world():
     users = User.query.first()
-    return users.name #  '<h1>Welcome To My Project!</h1>'
+    return json.dumps(users.to_json())
 
 
 # 查询文章列表
