@@ -21,7 +21,7 @@ class DevConfig(Config):
     """Development config class."""
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@localhost:3306/light_blog"
-
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # #!/usr/bin/env python
 # # encoding: utf-8
