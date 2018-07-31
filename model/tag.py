@@ -9,6 +9,7 @@ from marshmallow import Schema, fields, post_load
 from sqlalchemy import Integer, String, Column
 
 from model import db
+from model.post_tag import post_tag
 
 
 class Tag(db.Model):
@@ -16,6 +17,12 @@ class Tag(db.Model):
     __tablename__ = 'tag'
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
+
+    tag = db.relationship(
+        'Post',
+        secondary=post_tag,  # 告知sqlalchemy该many_to_many的关联保存在post_tag中
+        backref=db.backref('post', lazy='dynamic')
+    )
 
     def __init__(self, name):
         self.name = name
