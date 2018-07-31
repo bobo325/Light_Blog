@@ -5,7 +5,7 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Integer
 
 from model import db
 

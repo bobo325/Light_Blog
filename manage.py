@@ -8,8 +8,9 @@
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Server
 
-import model
+
 import run
+import model
 from model.comment import Comment
 from model.post import Post
 from model.tag import Tag
