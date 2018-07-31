@@ -32,19 +32,19 @@ def sidebar_data():
         limit(5).all()
 
     # get tags and sort by count of posts.
-    top_tags = db.session.query(Tag, func.count(post_tag).label('total')).\
+    top_tags = db.session.query(Tag, func.count(post_tag.c.post_id).label('total')).\
         join(post_tag).group_by(Tag).order_by('total DESC').limit(5).all()
     return recent, top_tags
 
 
-@app.route('/')
-def hello_world():
-    users = User.query.first()
-    return json.dumps(users.to_json())
+# @app.route('/')
+# def hello_world():
+#     users = User.query.first()
+#     return json.dumps(users.to_json())
 
 
 # 查询文章列表
-# @app.route('/')    # app.route() 函数中可以定义多样的 URL 路由规则, 也可以为一个视图函数定义多条 URL 路由规则,
+@app.route('/')      # app.route() 函数中可以定义多样的 URL 路由规则, 也可以为一个视图函数定义多条 URL 路由规则,
                      # 在这个 Blog 项目中的 URL 设计应该遵循 RESLful 风格
 @app.route('/<int:page>')
 def home(page=1):
@@ -53,9 +53,7 @@ def home(page=1):
     post = Post.query.order_by(
         Post.publish_date.desc()
     ).paginate(page, 10)
-
     recent, top_tags = sidebar_data()
-
     return render_template('home.html',                    # flask提供的render_template()函数，就是将
                                                            # 视图函数和Jinja模板文件关联起来的桥梁
                            post=post,  # 文章内容
