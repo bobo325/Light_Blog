@@ -8,7 +8,7 @@
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Server
 
-
+# 注意以下两个坑的引入顺序，大坑
 import run
 import model
 from model.comment import Comment
