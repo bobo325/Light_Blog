@@ -9,7 +9,7 @@
 
 class Config(object):
     """Base config class."""
-    pass
+    SECRET_KEY = 'imissyou.online'
 
 
 class ProdConfig(Config):
