@@ -1,0 +1,28 @@
+定义一个蓝图
+NOTE : 这里只是一个辅助理解的例子，并不作用到项目中。
+vim admin_pages/admin.py
+from flask import Blueprint
+
+admin = Blueprint(
+    'admin',
+    '__name__',
+    template_folder='template/admin',
+    static_folder='static/admin',
+    url_prefix='/admin')
+
+
+@admin.route('/')
+def home():
+    return render_template('home.html')
+
+NOTE 1: 蓝图类Blueprint 必须接收两个参数 蓝图名(admin) 和 当前的包名(__name__)
+NOTE 2: 可选参数定义了该蓝图到那里去寻找所需要的文件(template_folder/static__folder)
+NOTE 3: 由于指定了参数 template_folder 所以该蓝图的视图函数 home() 不会到默认的 template/ 目录下寻找模板文件 home.html 而是到 template/admin/ 目录下寻找 home.html
+NOTE 4: 参数 url_prefix 会为 URL 添加上前缀 admin，即：视图函数 home() 的 URL 路由实际上是 /admin/ ，而不是 /
+NOTE 5: 所以当我们在模板中使用 url_for() 函数时，传入的参数就不是 url_for(‘home’) 了，而是 url_for(‘admin.home’) 或 url_for(‘.home’) 如果需要查找的 URL 路由跟当前视图函数是在同一个蓝图下的话。
+
+注册一个蓝图
+需要将蓝图注册到 Flask 的 app 中，该蓝图才能够生效。
+main.py
+from admin_pages import admin
+app.register_blueprint(admin)
