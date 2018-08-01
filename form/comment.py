@@ -5,11 +5,13 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
-from wtforms import StringField, Form, TextField
+  # 更具有安全性
+from flask_wtf import FlaskForm
+from wtforms import StringField
 from wtforms.validators import DataRequired, Length
 
 
-class CommentForm(Form):
+class CommentForm(FlaskForm):
     """Form validator for comment."""
 
     # Set some field(InputBox) for enter the data.
