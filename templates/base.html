@@ -8,44 +8,47 @@
     <!-- Will be replace the page title -->
     <title>{% block title %}Home{% endblock %}</title>    <!--块可以被子模板中相同名字的块替换(继承)。-->
     <link rel="stylesheet" href="{{  url_for('static', filename='css/bootstrap.min.css') }}">  <!--加载bootstrap-->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <!-- Macro: 'render paginate' 需要定义在头部-->
-    {% macro render_pagination(pagination, endpoint) %}   {# 分页模板 #}{# endpoint为反响解析地址 #}
-        <nav>   <!--定义导航链接-->
-            <ul>
-                <li>
-                {% if pagination.has_prev %}  {# 有无上一页 #}
-                    <a href="{{ url_for('home', page=pagination.prev().page)
-                            }}" aria-label="Previous">
-                {% else %}
-                    <a href="{{ url_for('home', page=1) }}" aria-label="Previous">
-                {% endif %}
-                        <span aria-label="true">&laquo;</span>
-                    </a>
-                </li>
-                {% for page in pagination.iter_pages() %}
-                    {% if page %}
-                        {% if page != pagination.page %}
-                            <li>
-                                <a href="{{ url_for(endpoint, page=page) }}">
-                                   {{ page }}
-                                </a>
-                            </li>
-                        {% else %}
-                            <li><a href="">{{ page }}</a></li>
-                        {% endif %}
-                    {% else %}
-                        <li><a href=""></a></li>
-                    {% endif %}
-                {% endfor %}
-                <li>
-                    <a href="{{ url_for('home', page=pagination.next().page)
-                            }}" aria-label="Next">
-                        <span aria-label="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    {% endmacro %}
+     {% macro render_pagination(pagination, endpoint) %}
+   <nav>
+      <ul class="pagination">
+        <li>
+        {% if pagination.has_prev %}
+          <a href="{{ url_for('home', page=pagination.prev().page)
+                  }}" aria-label="Previous">
+        {% else %}
+          <a href="{{ url_for('home', page=1) }}" aria-label="Previous">
+        {% endif %}
+            <span aria-label="true">&laquo;</span>
+          </a>
+        </li>
+        {% for page in pagination.iter_pages() %}
+          {% if page %}
+            {% if page != pagination.page %}
+              <li>
+                <a href="{{ url_for(endpoint, page=page) }}">
+                  {{ page }}
+                </a>
+              </li>
+            {% else %}
+              <li><a href="">{{ page }}</a></li>
+            {% endif %}
+          {% else %}
+            <li><a>...</a></li>
+          {% endif %}
+        {% endfor %}
+        <li>
+          <a href="{{ url_for('home', page=pagination.next().page )
+            }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        <li>
+      </ul>
+    </nav>
+  {% endmacro %}
+
 </head>
 <body>
     <div class="container">
@@ -58,8 +61,6 @@
             body_content
         {% endblock %}
     </div>
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
 </html>
 
