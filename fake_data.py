@@ -9,9 +9,10 @@ from model import db, post_tag
 from model.user import User
 from model.tag import Tag
 from model.post import Post
+
 user = User(username='bobo测试', password='bobo测试')
 db.session.add(user)
-db.session.commit()
+db.session.flush()
 
 user = db.session.query(User).first()
 tag_one = Tag(name='Python')
@@ -22,12 +23,12 @@ db.session.add(tag_one)
 db.session.add(tag_two)
 db.session.add(tag_three)
 db.session.add(tag_four)
-db.session.commit()
+db.session.flush()
 tag_list = [tag_one, tag_two, tag_three, tag_four]
 
 s = "EXAMPLE TEXT"
 
-for i in range(10):
+for i in range(100):
     new_post = Post(title="Post" + str(i), publish_date=datetime.datetime.now(),
                     user_id=user.id, text=s)
     tags = random.sample(tag_list, random.randint(1, 3))
