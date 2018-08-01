@@ -24,13 +24,10 @@ from model.tag import Tag
 #         用于返回 tags 表中值相同的 post_id 列的数量，来得到 post 数最多的 tags。
 # NOTE 3: 因为 views.py 会作为所有视图函数的定义文件, 所以将 main.py 中的视图函数 home() 迁移到该文件中.
 from model.user import User
+from route import blog_blueprint
 from run import app
 
-# blog_blueprint = Blueprint(
-#     'blog',
-#     __name__,
-#     template_folder=path.join('/templates/blog'),
-#     url_prefix='/blog')
+
 
 
 def sidebar_data():
@@ -46,17 +43,17 @@ def sidebar_data():
     return recent, top_tags
 
 
-# @app.route('/')
-# def hello_world():
-#     top_tags = db.session.query(Tag, func.count(post_tag.c.post_id).label('total')). \
-#         join(post_tag).group_by(Tag).order_by('total DESC').limit(5).all()
-#     for one in top_tags:
-#         print(top_tags)
-#         print(one)
-#         print(one[0])
-#     #print(top_tags)
-#     #print(top_tags[0])
-#     return "Hello World!"
+@blog_blueprint.route('/')
+def hello_world():
+    top_tags = db.session.query(Tag, func.count(post_tag.c.post_id).label('total')). \
+        join(post_tag).group_by(Tag).order_by('total DESC').limit(5).all()
+    for one in top_tags:
+        print(top_tags)
+        print(one)
+        print(one[0])
+    #print(top_tags)
+    #print(top_tags[0])
+    return "Hello World!"
 
 
 # @app.route('/')
@@ -65,7 +62,7 @@ def sidebar_data():
 
 
 # 查询文章列表
-@app.route('/')      # app.route() 函数中可以定义多样的 URL 路由规则, 也可以为一个视图函数定义多条 URL 路由规则,
+# @app.route('/')      # app.route() 函数中可以定义多样的 URL 路由规则, 也可以为一个视图函数定义多条 URL 路由规则,
                                 # 在这个 Blog 项目中的 URL 设计应该遵循 RESLful 风格
 @app.route('/<int:page>')
 def home(page=1):
