@@ -81,7 +81,7 @@ def home(page=1):
 # 查询某一篇文章
 # 路由方法route()默认只接受POST请求；form.validata_on_submit()
 # 方法会隐式的判断该 HTTP 请求是不是 POST, 若是, 则将请求中提交的表单数据对象传入上述的 form 对象并进行数据检验.
-# @blog_blueprint.route('/post/<int:post_id>', methods=('GET', 'POST'))
+@blog_blueprint.route('/post/<int:post_id>', methods=('GET', 'POST'))
 def post(post_id):
     """View function for post page"""
     # 先做验证
