@@ -7,9 +7,8 @@
     <meta name="viewport" content="width=device-width,, initial-scale=1">  {# 适应手机尺寸 #}
     <!-- Will be replace the page title -->
     <title>{% block title %}Home{% endblock %}</title>    <!--块可以被子模板中相同名字的块替换(继承)。-->
-    <link rel="stylesheet" href="{{  url_for('static', filename='css/bootstrap.min.css') }}">  <!--加载bootstrap-->
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">  <!--加载bootstrap-->
+
     <!-- Macro: 'render paginate' 需要定义在头部-->
      {% macro render_pagination(pagination, endpoint) %}
    <nav>
@@ -61,6 +60,8 @@
             body_content
         {% endblock %}
     </div>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
 </html>
 
