@@ -5,5 +5,3 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
-from . import comment
-# wtforms 表单验证
