@@ -5,10 +5,11 @@
 import random
 import datetime
 
-from model import db, post_tag
-from model.user import User
-from model.tag import Tag
-from model.post import Post
+from light_blog.model import db
+from light_blog.model.post import Post
+from light_blog.model.user import User
+from light_blog.model.tag import Tag
+
 
 user = User(username='bobo测试', password='bobo测试')
 db.session.add(user)
