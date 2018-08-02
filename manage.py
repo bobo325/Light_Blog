@@ -8,19 +8,15 @@
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Server
 
-# 注意以下两个坑的引入顺序，大坑
-import run
-import model
-from model.comment import Comment
-from model.post import Post
-from model.tag import Tag
-from model.user import User
-
+# 注意以下两个包（app和model)的引入顺序，大坑
 # Init manager object via app object
-manager = Manager(run.app)
+from light_blog.controllers.run import app
+from light_blog.model import user, post, comment, tag
+from light_blog import model
+manager = Manager(app)
 
 # Init migrate object via app and db object
-migrate = Migrate(run.app, model.db)
+migrate = Migrate(app, model.db)
 
 # Create a new commands: server
 # This command will be run the Flask development_env server
@@ -37,12 +33,12 @@ def make_shell_context():
     """
     # 确保有导入Flask app object, 否则启动的CLI上下问中仍然没有app对象
     # return dict(app=run.app)
-    return dict(app=run.app,
+    return dict(app=app,
                 db=model.db,
-                User=model.user.User,
-                Post=model.post.Post,
-                Comment=model.comment.Comment,
-                Tag=model.tag.Tag)   # post_tag 代表了两张表之间的关联，会由数据库自身来进行处理。
+                User=user.User,
+                Post=post.Post,
+                Comment=comment.Comment,
+                Tag=tag.Tag)   # post_tag 代表了两张表之间的关联，会由数据库自身来进行处理。
 
 """
 通过manager.py来执行命令行是十分有必要的， 因为一些Flask的扩展只有
