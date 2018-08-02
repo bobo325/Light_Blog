@@ -28,8 +28,6 @@ from route import blog_blueprint
 from run import app
 
 
-
-
 def sidebar_data():
     """Set the sidebar function."""
 
@@ -51,9 +49,7 @@ def hello_world():
         print(top_tags)
         print(one)
         print(one[0])
-    #print(top_tags)
-    #print(top_tags[0])
-    return "Hello World!"
+    return render_template("blog/index.html")
 
 
 # @app.route('/')
@@ -64,7 +60,7 @@ def hello_world():
 # 查询文章列表
 # @app.route('/')      # app.route() 函数中可以定义多样的 URL 路由规则, 也可以为一个视图函数定义多条 URL 路由规则,
                                 # 在这个 Blog 项目中的 URL 设计应该遵循 RESLful 风格
-@app.route('/<int:page>')
+@blog_blueprint.route('/<int:page>')
 def home(page=1):
     """View function for home page"""
 
@@ -72,7 +68,7 @@ def home(page=1):
         Post.publish_date.desc()
     ).paginate(page, 10)
     recent, top_tags = sidebar_data()
-    return render_template('home.html',  # flask提供的render_template()函数，就是将
+    return render_template('blog/home.html',  # flask提供的render_template()函数，就是将
                            # 视图函数和Jinja模板文件关联起来的桥梁
                            post=post,  # 文章内容
                            recent=recent,  # 最近五篇文章
@@ -82,7 +78,7 @@ def home(page=1):
 # 查询某一篇文章
 # 路由方法route()默认只接受POST请求；form.validata_on_submit()
 # 方法会隐式的判断该 HTTP 请求是不是 POST, 若是, 则将请求中提交的表单数据对象传入上述的 form 对象并进行数据检验.
-@app.route('/post/<int:post_id>', methods=('GET', 'POST'))
+@blog_blueprint.route('/post/<int:post_id>', methods=('GET', 'POST'))
 def post(post_id):
     """View function for post page"""
     # 先做验证
@@ -99,7 +95,7 @@ def post(post_id):
     comments = post.comment.order_by(Comment.date.desc()).all()
     recent, top_tags = sidebar_data()
     db.session.commit()
-    return render_template('post.html',
+    return render_template('blog/post.html',
                            post=post,
                            tags=tags,
                            comments=comments,
@@ -116,7 +112,7 @@ def tag(tag_name):
     posts = tag.post.order_by(Post.publish_date.desc()).all()
     recent, top_tags = sidebar_data()
 
-    return render_template('tag.html',
+    return render_template('blog/tag.html',
                            tag=tag,
                            posts=posts,
                            recent=recent,
