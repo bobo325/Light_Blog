@@ -23,14 +23,7 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@localhost:3306/light_blog"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-# #!/usr/bin/env python
-# # encoding: utf-8
-#
-# """
-# @author: Chenbo
-# @time: 2018/7/28 11:53
-# """
-#
+
 # import os
 #
 # """
