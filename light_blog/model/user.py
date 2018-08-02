@@ -7,7 +7,7 @@
 """
 from sqlalchemy import Column, String, Integer
 
-from model import db
+from light_blog.model import db
 from marshmallow import Schema, fields, post_load
 
 

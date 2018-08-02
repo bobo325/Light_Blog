@@ -8,8 +8,8 @@
 from marshmallow import Schema, fields, post_load
 from sqlalchemy import Integer, String, Column
 
-from model import db
-from model.post_tag import post_tag
+from light_blog.model import db
+from light_blog.model.post_tag import post_tag
 
 
 class Tag(db.Model):

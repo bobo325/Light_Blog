@@ -7,7 +7,7 @@
 """
 from sqlalchemy import Integer
 
-from model import db
+from light_blog.model import db
 
 #
 # class PostTag(db.Model):
@@ -21,4 +21,5 @@ from model import db
 post_tag = db.Table('post_tag',
     db.Column('id', Integer, primary_key=True, autoincrement=True),
     db.Column('post_id', Integer, db.ForeignKey('post.id')),
-    db.Column('tag_id', Integer, db.ForeignKey('tag.id')))
+    db.Column('tag_id', Integer, db.ForeignKey('tag.id'))
+                    )

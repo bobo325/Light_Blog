@@ -10,7 +10,7 @@ from datetime import datetime
 from marshmallow import Schema, fields
 from sqlalchemy import Column, Integer, String, Text, DateTime
 
-from model import db
+from light_blog.model import db
 
 
 class Comment(db.Model):

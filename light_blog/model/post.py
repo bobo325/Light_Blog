@@ -10,8 +10,8 @@ from datetime import datetime
 from marshmallow import Schema, fields, post_load
 from sqlalchemy import DateTime, Column, String, Text, Integer
 
-from model import db
-from model.post_tag import post_tag
+from light_blog.model import db
+from light_blog.model.post_tag import post_tag
 
 
 class Post(db.Model):
