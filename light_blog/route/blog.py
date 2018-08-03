@@ -8,7 +8,7 @@
 
 import datetime
 
-from flask import render_template
+from flask import render_template, redirect, url_for
 from sqlalchemy import func
 
 
@@ -54,10 +54,10 @@ def sidebar_data():
 #         print(one[0])
 #     return render_template("index.html")
 
-
+# 重定向至首页目录
 @app.route('/')
 def index():
-    return "Hello WoQu!"
+    return redirect(url_for('blog.home'))
 
 
 # 查询文章列表
@@ -87,7 +87,6 @@ def post(post_id):
     # 先做验证
     form = CommentForm()
     if form.validate_on_submit():
-        print(form.data)
         new_comment = Comment(name=form.name.data,
                               text=form.name.data,
                               date=datetime.datetime.now(),
@@ -98,7 +97,7 @@ def post(post_id):
     comments = post.comment.order_by(Comment.date.desc()).all()
     recent, top_tags = sidebar_data()
     db.session.commit()
-    return render_template('../light_blog/templates/blog/post.html',
+    return render_template('post.html',
                            post=post,
                            tags=tags,
                            comments=comments,
