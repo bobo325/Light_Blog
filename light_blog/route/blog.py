@@ -8,11 +8,9 @@
 
 import datetime
 
-from flask import render_template, redirect, url_for
+from flask import render_template
 from sqlalchemy import func
 
-
-from light_blog.controllers.run import app
 from light_blog.forms import CommentForm
 from light_blog.model import db
 
@@ -53,11 +51,6 @@ def sidebar_data():
 #         print(one)
 #         print(one[0])
 #     return render_template("index.html")
-
-# 重定向至首页目录
-@app.route('/')
-def index():
-    return redirect(url_for('blog.home'))
 
 
 # 查询文章列表

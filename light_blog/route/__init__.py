@@ -9,7 +9,6 @@ from os import path
 
 from flask import Blueprint
 
-from light_blog.controllers.run import app
 
 blog_blueprint = Blueprint(
     'blog',
@@ -19,4 +18,3 @@ blog_blueprint = Blueprint(
 
 # 将关联的路由以子模块的形式导入
 from . import blog
-app.register_blueprint(blog_blueprint)
