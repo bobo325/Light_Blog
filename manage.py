@@ -5,14 +5,19 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
+import os
+
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Server
 
 # 注意以下两个包（app和model)的引入顺序，大坑
 # Init manager object via app object
-from light_blog.controllers.run import app
+from light_blog.controllers.run import create_app
 from light_blog.model import user, post, comment, tag
 from light_blog import model
+
+env = os.environ.get('BLOG_ENV', 'dev')
+app = create_app('light_blog.config.%sConfig' % env.capitalize())
 manager = Manager(app)
 
 # Init migrate object via app and db object
