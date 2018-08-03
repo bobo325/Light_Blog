@@ -10,7 +10,7 @@ from flask import Flask, redirect, url_for
 import os
 
 from light_blog.extensions import bcrypt
-from light_blog.route import blog_blueprint
+from light_blog.route import blog_blueprint, account_blueprint
 from light_blog.model import db
 
 
@@ -35,4 +35,5 @@ def create_app(object_name):
         return redirect(url_for('blog.home'))
 
     app.register_blueprint(blueprint=blog_blueprint)
+    app.register_blueprint(blueprint=account_blueprint)
     return app
