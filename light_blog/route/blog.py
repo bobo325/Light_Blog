@@ -8,10 +8,10 @@
 
 import datetime
 
-from flask import render_template
+from flask import render_template, url_for, redirect
 from sqlalchemy import func
 
-from light_blog.forms import CommentForm
+from light_blog.forms import CommentForm, PostForm
 from light_blog.model import db
 
 
@@ -99,7 +99,7 @@ def post(post_id):
                            top_tags=top_tags)
 
 
-@blog_blueprint.route('/tag/<string:tag_name>')
+# @blog_blueprint.route('/tag/<string:tag_name>')
 def tag(tag_name):
     """View function for tag page"""
 
@@ -114,7 +114,7 @@ def tag(tag_name):
                            top_tags=top_tags)
 
 
-@blog_blueprint.route('/user/<string:username>')
+# @blog_blueprint.route('/user/<string:username>')
 def user(username):
     """View function for user page"""
     user = db.session.query(User).filter_by(username=username).first_or_404()
@@ -127,4 +127,42 @@ def user(username):
                            recent=recent,
                            top_tags=top_tags)
 
+
+@blog_blueprint.route('/new', methods=['GET', 'POST'])
+def new_post():
+    """View function for new_port"""
+    form = PostForm()
+    if form.validate_on_submit():
+        new_post = Post(title=form.title.data,
+                        text=form.text.data,
+                        publish_date=datetime.now(),
+                        user_id=1)                      # TODO 后需修改
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for('blog.home'))
+
+    return render_template('new_post.html',
+                           form=form)
+
+
+@blog_blueprint.route('/edit/<string:id>', methods=['GET', 'POST'])
+def edit_post(id):
+    """View function for edit_post."""
+
+    post = Post.query.get_or_404(id)
+    form = PostForm()
+
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.text = form.text.data
+        post.publish_date = datetime.datetime.now()
+
+        # Update the post
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('blog.post', post_id=post.id))
+
+    form.title.data = post.title
+    form.text.data = post.text
+    return render_template('edit_post.html', form=form, post=post)
 
