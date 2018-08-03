@@ -7,6 +7,7 @@
 """
 from sqlalchemy import Column, String, Integer
 
+from light_blog.extensions import bcrypt
 from light_blog.model import db
 from marshmallow import Schema, fields, post_load
 
@@ -27,11 +28,18 @@ class User(db.Model):
 
     def __init__(self, username, password):
         self.username = username
-        self.password = password
+        self.password = self.set_password(password)
 
     def __repr__(self):
         """Define the string format for instance of User."""
         return "<Model User `{},{}`>".format(self.username, self.password)
+
+    def set_password(self, password):
+        """Convert the password to cryptograph via flask-bcrppt"""
+        return bcrypt.generate_password_hash(password)
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
 
     def to_json(self):
         schema = UserSchema(strict=True)
@@ -41,9 +49,11 @@ class User(db.Model):
 class UserSchema(Schema):
     id = fields.Integer(required=True)
     username = fields.String()  # default='chenbo'
-    password = fields.String()  # default='123456'
+    password = fields.String()  # default='chenbo'
 
     @post_load
     def make_entity(self, data):
         return User(**data)
 
+# set_password(self, password)：在设定密码的时候，将明文密码转换成为 Bcrypt 类型的哈希值。
+# check_password(self, password)：检验输入的密码的哈希值，与存储在数据库中的哈希值是否一致。
