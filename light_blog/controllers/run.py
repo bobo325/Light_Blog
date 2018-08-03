@@ -9,6 +9,7 @@ from flask import Flask, redirect, url_for
 
 import os
 
+from light_blog.extensions import bcrypt
 from light_blog.route import blog_blueprint
 from light_blog.model import db
 
@@ -26,6 +27,7 @@ def create_app(object_name):
 
     # sqlalchemy绑定app
     db.init_app(app)
+    bcrypt.init_app(app)  # bcrypt 也是通过在app注册的
 
     # 重定向至首页目录
     @app.route('/')
