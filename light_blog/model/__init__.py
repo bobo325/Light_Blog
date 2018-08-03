@@ -7,6 +7,5 @@
 """
 from flask_sqlalchemy import SQLAlchemy
 
-from light_blog.controllers.run import app
 
-db = SQLAlchemy(app)  # 启动sqlalchemy
+db = SQLAlchemy()  # 启动sqlalchemy
