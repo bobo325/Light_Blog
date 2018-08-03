@@ -7,37 +7,30 @@
 """
 from flask import Flask, redirect, url_for
 
-from light_blog.config import DevConfig, Config
 import os
 
 from light_blog.route import blog_blueprint
 from light_blog.model import db
 
-basedir = os.path.dirname(__file__)
-# import pdb
-# pdb.set_trace()
-static_path = os.path.abspath(os.path.join( basedir,  os.path.pardir, 'static'))
 
-app = Flask(__name__, static_url_path='/static', static_folder=static_path)
-# print(static_path)
-# print(__name__)
-# print(__file__)
+def create_app(object_name):
+    basedir = os.path.dirname(__file__)
 
+    static_path = os.path.abspath(os.path.join( basedir,  os.path.pardir, 'static'))
 
-app.config.from_object(DevConfig)
-app.config.from_object(Config)
-# print(app.config.get('SQLALCHEMY_DATABASE_URI'))  # 说明已经获取到地址了
-views = __import__('light_blog.route.blog')
-# Will be load the SQLALCHEMY_DATABASE_URL from config.py to db object
-db.init_app(app)
+    app = Flask(__name__, static_url_path='/static', static_folder=static_path)
 
+    app.config.from_object(object_name)
 
-# 重定向至首页目录
-@app.route('/')
-def index():
-    return redirect(url_for('blog.home'))
+    # views = __import__('light_blog.route.blog')  #有了蓝本注册之后就不需要import了
 
+    # sqlalchemy绑定app
+    db.init_app(app)
 
-app.register_blueprint(blueprint=blog_blueprint)
-if __name__ == '__main__':
-    app.run()
+    # 重定向至首页目录
+    @app.route('/')
+    def index():
+        return redirect(url_for('blog.home'))
+
+    app.register_blueprint(blueprint=blog_blueprint)
+    return app
