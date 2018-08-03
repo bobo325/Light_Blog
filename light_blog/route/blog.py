@@ -99,7 +99,7 @@ def post(post_id):
                            top_tags=top_tags)
 
 
-# @blog_blueprint.route('/tag/<string:tag_name>')
+@blog_blueprint.route('/tag/<string:tag_name>')
 def tag(tag_name):
     """View function for tag page"""
 
@@ -114,7 +114,7 @@ def tag(tag_name):
                            top_tags=top_tags)
 
 
-# @blog_blueprint.route('/user/<string:username>')
+@blog_blueprint.route('/user/<string:username>')
 def user(username):
     """View function for user page"""
     user = db.session.query(User).filter_by(username=username).first_or_404()
