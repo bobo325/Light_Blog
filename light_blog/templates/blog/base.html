@@ -7,16 +7,16 @@
     <meta name="viewport" content="width=device-width,, initial-scale=1">  {# 适应手机尺寸 #}
     <!-- Will be replace the page title -->
     <title>{% block title %}Home{% endblock %}</title>    <!--块可以被子模板中相同名字的块替换(继承)。-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">  <!--加载bootstrap-->
 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Macro: 'render paginate' 需要定义在头部-->
-     {% macro render_pagination(pagination, endpoint) %}
-   <nav>
+    {% macro render_pagination(pagination, endpoint) %}
+    <nav>
       <ul class="pagination">
         <li>
         {% if pagination.has_prev %}
           <a href="{{ url_for('blog.home', page=pagination.prev().page)
-                  }}" aria-label="Previous">
+            }}" aria-label="Previous">
         {% else %}
           <a href="{{ url_for('blog.home', page=1) }}" aria-label="Previous">
         {% endif %}
@@ -39,14 +39,19 @@
           {% endif %}
         {% endfor %}
         <li>
+          {% if pagination.has_next %}
           <a href="{{ url_for('blog.home', page=pagination.next().page )
             }}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
+          {% else %}
+          <a href="{{ url_for('blog.home', page=10) }}" aria-label="Next">
+          {% endif %}
+            <span aria-label="true">&raquo;</span>
           </a>
         <li>
       </ul>
     </nav>
   {% endmacro %}
+
 
 </head>
 <body>
@@ -62,6 +67,7 @@
     </div>
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
 </body>
 </html>
 
