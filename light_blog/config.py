@@ -9,7 +9,6 @@
 
 class Config(object):
     """Base config class."""
-    SECRET_KEY = 'imissyou.online'
 
 
 class ProdConfig(Config):
@@ -22,7 +21,7 @@ class DevConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@localhost:3306/light_blog"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
+    SECRET_KEY = 'imissyou.online'
 
 # import os
 #
