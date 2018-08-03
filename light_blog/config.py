@@ -9,7 +9,11 @@
 
 class Config(object):
     """Base config class."""
+    SECRET_KEY = 'imissyou.online'
 
+    # reCAPTCHA Public key and Private key
+    RECAPTCHA_PUBLIC_KEY = "6LcWCmgUAAAAAJ65XRBGvV3hOEjgrOJMloq7c8HO"
+    RECAPTCHA_PRIVATE_KEY = "6LcWCmgUAAAAADiamtF6IyUe_GEL4hDYaND3xpoo"
 
 class ProdConfig(Config):
     """Production config class."""
@@ -21,7 +25,7 @@ class DevConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@localhost:3306/light_blog"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'imissyou.online'
+
 
 # import os
 #
