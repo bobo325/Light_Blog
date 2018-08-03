@@ -9,6 +9,9 @@ from flask import Flask
 
 from light_blog.config import DevConfig, Config
 import os
+
+from light_blog.model import db
+
 basedir = os.path.dirname(__file__)
 # import pdb
 # pdb.set_trace()
@@ -27,6 +30,7 @@ app.config.from_object(DevConfig)
 app.config.from_object(Config)
 # print(app.config.get('SQLALCHEMY_DATABASE_URI'))  # 说明已经获取到地址了
 views = __import__('light_blog.route.blog')
-
+# Will be load the SQLALCHEMY_DATABASE_URL from config.py to db object
+db.init_app(app)
 if __name__ == '__main__':
     app.run()
