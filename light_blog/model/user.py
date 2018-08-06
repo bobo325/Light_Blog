@@ -28,11 +28,6 @@ class User(db.Model):
         backref='user',
         lazy='dynamic'
     )
-    role = db.relationship(
-        'Role',
-        secondary=user_role,
-        backref=db.backref('user', lazy='dynamic')
-    )
 
     def __init__(self, username, password):
         self.username = username
@@ -76,7 +71,7 @@ class User(db.Model):
     def get_id(self):
         """Get the user's uuid from database."""
 
-        return unicode(self.id)
+        return self.id
 
 
 class UserSchema(Schema):
