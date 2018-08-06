@@ -19,8 +19,8 @@ db.session.add(user2)
 db.session.flush()
 role = Role(name="初始化角色")
 role2 = Role(name="bobo角色2")
-user1.role = [role, role2]
-user2.role = [role, role2]
+role.user = [user1, user2]
+role2.user2 = [user1, user2]
 db.session.add(role)
 db.session.add(role2)
 db.session.flush()
