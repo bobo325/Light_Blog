@@ -5,11 +5,14 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
+from flask_login import AnonymousUserMixin
 from sqlalchemy import Column, String, Integer
 
 from light_blog.extensions import bcrypt
 from light_blog.model import db
 from marshmallow import Schema, fields, post_load
+
+from light_blog.model.user_role import user_role
 
 
 class User(db.Model):
@@ -24,6 +27,11 @@ class User(db.Model):
         'Post',
         backref='user',
         lazy='dynamic'
+    )
+    role = db.relationship(
+        'Role',
+        secondary=user_role,
+        backref=db.backref('user', lazy='dynamic')
     )
 
     def __init__(self, username, password):
@@ -44,6 +52,31 @@ class User(db.Model):
     def to_json(self):
         schema = UserSchema(strict=True)
         return schema.dump(self).data
+
+    def is_authenticated(self):
+        """Check the user whether logged in."""
+        if isinstance(self, AnonymousUserMixin):
+            return False
+        else:
+            return True
+
+    def is_active(self):
+        """Check the user whether pass the activation process."""
+
+        return True
+
+    def is_anonymous(self):
+        """Check the user's login status whether is anonymous."""
+
+        if isinstance(self, AnonymousUserMixin):
+            return True
+        else:
+            return False
+
+    def get_id(self):
+        """Get the user's uuid from database."""
+
+        return unicode(self.id)
 
 
 class UserSchema(Schema):
