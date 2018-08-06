@@ -9,6 +9,7 @@
 import datetime
 
 from flask import render_template, url_for, redirect
+from flask_login import login_required
 from sqlalchemy import func
 
 from light_blog.forms import CommentForm, PostForm
@@ -115,13 +116,14 @@ def tag(tag_name):
 
 
 @blog_blueprint.route('/user/<string:username>')
+@login_required
 def user(username):
     """View function for user page"""
     user = db.session.query(User).filter_by(username=username).first_or_404()
     posts = user.post.order_by(Post.publish_date.desc()).all()
     recent, top_tags = sidebar_data()
 
-    return render_template('../light_blog/templates/blog/user.html',
+    return render_template('user.html',
                            user=user,
                            posts=posts,
                            recent=recent,
@@ -129,6 +131,7 @@ def user(username):
 
 
 @blog_blueprint.route('/new', methods=['GET', 'POST'])
+@login_required
 def new_post():
     """View function for new_port"""
     form = PostForm()
@@ -136,7 +139,7 @@ def new_post():
         new_post = Post(title=form.title.data,
                         text=form.text.data,
                         publish_date=datetime.now(),
-                        user_id=1)                      # TODO 后需修改
+                        user_id=1)                      # TODO 后需修改 通过flask_login从session中获取
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for('blog.home'))
@@ -146,6 +149,7 @@ def new_post():
 
 
 @blog_blueprint.route('/edit/<string:id>', methods=['GET', 'POST'])
+@login_required
 def edit_post(id):
     """View function for edit_post."""
 
