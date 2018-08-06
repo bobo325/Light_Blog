@@ -138,7 +138,7 @@ def new_post():
     if form.validate_on_submit():
         new_post = Post(title=form.title.data,
                         text=form.text.data,
-                        publish_date=datetime.now(),
+                        publish_date=datetime.datetime.now(),
                         user_id=1)                      # TODO 后需修改 通过flask_login从session中获取
         db.session.add(new_post)
         db.session.commit()
