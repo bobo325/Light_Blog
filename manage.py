@@ -18,6 +18,7 @@ from light_blog import model
 
 env = os.environ.get('BLOG_ENV', 'dev')
 app = create_app('light_blog.config.%sConfig' % env.capitalize())
+
 manager = Manager(app)
 
 # Init migrate object via app and db object
