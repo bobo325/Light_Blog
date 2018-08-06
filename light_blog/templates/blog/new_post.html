@@ -7,14 +7,14 @@
   <form method="POST" action="{{ url_for('blog.new_post') }}">
     {{ form.hidden_tag() }}
     <div class="form-group">
-      {{ form.title.label }}
+      {{ form.title.label }}<br>
       {% if form.title.errors %}
         {% for e in form.title.errors %}
           <p class="help-block">{{ e }}</p>
         {% endfor %}
       {% endif %}
       {{ form.title(class_='form-control') }}
-    </div>
+    </div><br>
     <div class="form-gruop">
       {{ form.text.label }}
       {% if form.text.errors %}
@@ -23,7 +23,7 @@
         {% endfor %}
       {% endif %}
       {{ form.text(id="editor", class_='form-contril') }}
-    </div>
+    </div><br>
     <input class="btn-primary" type="submit" value="Submit">
   </form>
 </div>
