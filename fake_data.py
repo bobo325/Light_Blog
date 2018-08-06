@@ -7,12 +7,22 @@ import datetime
 
 from light_blog.model import db
 from light_blog.model.post import Post
+from light_blog.model.role import Role
 from light_blog.model.user import User
 from light_blog.model.tag import Tag
 
 
-user = User(username='bobo测试', password='bobo测试')
-db.session.add(user)
+user1 = User(username='bobo测试', password='bobo测试')
+user2 = User(username="bobo", password="bobo")
+db.session.add(user1)
+db.session.add(user2)
+db.session.flush()
+role = Role(name="初始化角色")
+role2 = Role(name="bobo角色2")
+user1.role = [role, role2]
+user2.role = [role, role2]
+db.session.add(role)
+db.session.add(role2)
 db.session.flush()
 
 user = db.session.query(User).first()
