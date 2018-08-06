@@ -18,11 +18,11 @@ class Tag(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
 
-    tag = db.relationship(
-        'Post',
-        secondary=post_tag,  # 告知sqlalchemy该many_to_many的关联保存在post_tag中
-        backref=db.backref('post', lazy='dynamic')
-    )
+    # post = db.relationship(
+    #     'Post',
+    #     secondary=post_tag,  # 告知sqlalchemy该many_to_many的关联保存在post_tag中
+    #     backref=db.backref('tag', lazy='dynamic')
+    # )
 
     def __init__(self, name):
         self.name = name
