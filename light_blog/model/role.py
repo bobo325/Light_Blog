@@ -19,11 +19,11 @@ class Role(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
 
-    # user = db.relationship(
-    #     'User',
-    #     secondary=user_role,  # 告知sqlalchemy该many_to_many的关联保存在post_tag中
-    #     backref=db.backref('role', lazy='dynamic')
-    # )
+    role = db.relationship(
+        'Role',
+        secondary=user_role,
+        backref=db.backref('user', lazy='dynamic')
+    )
 
     def __init__(self, name):
         self.name = name
