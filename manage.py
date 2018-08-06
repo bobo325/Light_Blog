@@ -13,7 +13,7 @@ from flask_script import Manager, Server
 # 注意以下两个包（app和model)的引入顺序，大坑
 # Init manager object via app object
 from light_blog.controllers.run import create_app
-from light_blog.model import user, post, comment, tag
+from light_blog.model import user, post, comment, tag, role
 from light_blog import model
 
 env = os.environ.get('BLOG_ENV', 'dev')
@@ -43,7 +43,8 @@ def make_shell_context():
                 User=user.User,
                 Post=post.Post,
                 Comment=comment.Comment,
-                Tag=tag.Tag)   # post_tag 代表了两张表之间的关联，会由数据库自身来进行处理。
+                Tag=tag.Tag,
+                Role=role.Role)   # post_tag 代表了两张表之间的关联，会由数据库自身来进行处理。
 
 """
 通过manager.py来执行命令行是十分有必要的， 因为一些Flask的扩展只有
