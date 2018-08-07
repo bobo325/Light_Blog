@@ -62,7 +62,7 @@ def sidebar_data():
 def home(page=1):
     """View function for home page"""
 
-    post = Post.query.order_by(
+    post = Post.query.filter(Post.is_delete.is_(False)).order_by(
         Post.publish_date.desc()
     ).paginate(page, 10)
     recent, top_tags = sidebar_data()
@@ -150,7 +150,7 @@ def new_post():
                            form=form)
 
 
-@blog_blueprint.route('/edit/<string:id>', methods=['GET', 'POST'])
+@blog_blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 # @poster_permission.require(http_exception=403)  # 不符合权限时抛出的异常
 def edit_post(id):
@@ -176,3 +176,25 @@ def edit_post(id):
     form.text.data = post.text
     return render_template('edit_post.html', form=form, post=post)
 
+
+@blog_blueprint.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+# @poster_permission.require(http_exception=403)  # 不符合权限时抛出的异常
+def delete_post(id):
+    """View function for edit_post."""
+
+    post = Post.query.get_or_404(id)
+    print(id)
+    if post.user_id != current_user.id:
+        flash('Your have no right to delete.', category="error")
+        return redirect(url_for('blog.post', post_id=post.id))
+    post.is_delete = True
+    db.session.commit()
+    post = Post.query.order_by(
+        Post.publish_date.desc()
+    ).paginate(1, 10)
+    recent, top_tags = sidebar_data()
+    return render_template('home.html',
+                           post=post,
+                           recent=recent,
+                           top_tags=top_tags)
