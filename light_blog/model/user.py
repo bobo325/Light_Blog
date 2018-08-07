@@ -5,14 +5,14 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
+
 from flask_login import AnonymousUserMixin
+from flask_login._compat import unicode
 from sqlalchemy import Column, String, Integer
 
 from light_blog.extensions import bcrypt
 from light_blog.model import db
 from marshmallow import Schema, fields, post_load
-
-from light_blog.model.user_role import user_role
 
 
 class User(db.Model):
@@ -71,7 +71,7 @@ class User(db.Model):
     def get_id(self):
         """Get the user's uuid from database."""
 
-        return self.id
+        return unicode(self.id)
 
 
 class UserSchema(Schema):

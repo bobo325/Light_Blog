@@ -28,7 +28,8 @@ class LoginForm(FlaskForm):
     """Login Form"""
     username = StringField('Username', [DataRequired(), Length(max=255)])
     password = PasswordField('Password', [DataRequired()])
-    remember = BooleanField('Remember Me')
+    remember = BooleanField('Remember Me')  # “记住我”的功能很难实现。但是，Flask-Login 几乎透明地实现它
+    #  - 只要把 remember=True 传递给 login_user。一个 cookie 将会存储在用户计算机中
 
     def validate(self):
         """Validator for check the account information."""

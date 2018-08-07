@@ -22,7 +22,7 @@ oauth = OAuth()
 
 # facebook 第三方登录接口  # TODO 后期修改facebook应用域名
 # Create the auth object for facebook.
-facebook = oauth.remote_app(
+qq = oauth.remote_app(
     'facebook',
     base_url='https://graph.facebook.com/',
     request_token_url=None,
@@ -33,7 +33,7 @@ facebook = oauth.remote_app(
     request_token_params={'scope': 'email'})
 
 
-@facebook.tokengetter
+@qq.tokengetter
 def get_facebook_token():
     return session.get('facebook_oauth_token')
 

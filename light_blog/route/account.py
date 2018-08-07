@@ -10,7 +10,7 @@ from flask import url_for, flash, render_template, request, session, current_app
 from flask_login import logout_user
 from werkzeug.utils import redirect
 
-from light_blog.extensions import facebook
+from light_blog.extensions import qq
 from light_blog.forms import LoginForm, RegisterForm
 from light_blog.model import db
 from light_blog.model.user import User
@@ -59,7 +59,7 @@ def register():
 # 当访问/facebook时，出发授权流程
 @account_blueprint.route('/facebook')
 def facebook_login():
-    return facebook.authorize(
+    return qq.authorize(
         callback=url_for('account.facebook_authorized',
                          next=request.referrer or None,
                          _external=True))
@@ -67,7 +67,7 @@ def facebook_login():
 
 # 该视图接受从facebook认证服务器返回的resp对象
 @account_blueprint.route('/facebook_authorized')   # 修改应用域名到线上环境 配置Facebook配置
-@facebook.authorized_handler
+@qq.authorized_handler
 def facebook_authorized(resp):
     if resp is None:
         return 'Access denied: reason=%s error=%s' % (
@@ -76,16 +76,16 @@ def facebook_authorized(resp):
 
     session['facebook_oauth_token'] = (resp['access_token'], '')
 
-    me = facebook.get('/me')
+    me = qq.get('/me')
 
     if me.data.get('first_name', False):
-        facebook_username = me.data['first_name'] + " " + me.data['last_name']
+        qq_username = me.data['first_name'] + " " + me.data['last_name']
     else:
-        facebook_username = me.data['name']
+        qq_username = me.data['name']
 
-    user = User.query.filter_by(username=facebook_username).first()
+    user = User.query.filter_by(username=qq_username).first()
     if user is None:
-        user = User(username=facebook_username, password='chenbo')
+        user = User(username=qq_username, password='chenbo')
         db.session.add(user)
         db.session.commit()
 

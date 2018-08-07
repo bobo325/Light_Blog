@@ -8,8 +8,8 @@
 
 import datetime
 
-from flask import render_template, url_for, redirect
-from flask_login import login_required
+from flask import render_template, url_for, redirect, current_app
+from flask_login import login_required, current_user
 from sqlalchemy import func
 
 from light_blog.forms import CommentForm, PostForm
@@ -108,7 +108,7 @@ def tag(tag_name):
     posts = tag.post.order_by(Post.publish_date.desc()).all()
     recent, top_tags = sidebar_data()
 
-    return render_template('../light_blog/templates/blog/tag.html',
+    return render_template('tag.html',
                            tag=tag,
                            posts=posts,
                            recent=recent,
@@ -135,11 +135,12 @@ def user(username):
 def new_post():
     """View function for new_port"""
     form = PostForm()
+    user_id = current_user.get_id()
     if form.validate_on_submit():
         new_post = Post(title=form.title.data,
                         text=form.text.data,
                         publish_date=datetime.datetime.now(),
-                        user_id=1)                      # TODO 后需修改 通过flask_login从session中获取
+                        user_id=user_id)                      # 测试成功
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for('blog.home'))

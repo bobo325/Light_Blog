@@ -5,7 +5,7 @@
   <form method="POST" action="{{ url_for('account.login')
     }}">
     {{ form.hidden_tag() }}
-    <div>
+    <div class="form-group">
       {{ form.username.label }}
       {% if form.username.errors %}
         {% for e in form.username.errors %}
@@ -22,6 +22,15 @@
         {% endfor %}
       {% endif %}
       {{ form.password(class_='form-control') }}
+    </div>
+    <div class="form-group">
+        {{ form.remember.label }}
+        {% if form.remember.errors %}
+            {% for e in form.remember.errors %}
+                <p class="help-block">{{ e }}</p>
+            {% endfor %}
+        {% endif %}
+        {{ form.remember }}
     </div>
     <input class="btn btn-primary" type="submit" value="Login">
   </form>
