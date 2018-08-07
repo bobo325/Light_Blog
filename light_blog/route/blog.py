@@ -8,10 +8,11 @@
 
 import datetime
 
-from flask import render_template, url_for, redirect, current_app
+from flask import render_template, url_for, redirect, current_app, flash
 from flask_login import login_required, current_user
 from sqlalchemy import func
 
+from light_blog.extensions import poster_permission
 from light_blog.forms import CommentForm, PostForm
 from light_blog.model import db
 
@@ -151,10 +152,14 @@ def new_post():
 
 @blog_blueprint.route('/edit/<string:id>', methods=['GET', 'POST'])
 @login_required
+# @poster_permission.require(http_exception=403)  # 不符合权限时抛出的异常
 def edit_post(id):
     """View function for edit_post."""
 
     post = Post.query.get_or_404(id)
+    if post.user_id != current_user.id:
+        flash('Your user created failed, please try again.', category="error")
+        return redirect(url_for('blog.post', post_id=post.id))
     form = PostForm()
 
     if form.validate_on_submit():

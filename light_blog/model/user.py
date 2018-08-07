@@ -14,6 +14,8 @@ from light_blog.extensions import bcrypt
 from light_blog.model import db
 from marshmallow import Schema, fields, post_load
 
+from light_blog.model.role import Role
+
 
 class User(db.Model):
     """Represents Proected users"""
@@ -32,6 +34,10 @@ class User(db.Model):
     def __init__(self, username, password):
         self.username = username
         self.password = self.set_password(password)
+
+        # 每一个新创建的用户都有这个默认角色
+        default = Role.query.filter_by(name='default').one()
+        self.roles.append(default)
 
     def __repr__(self):
         """Define the string format for instance of User."""

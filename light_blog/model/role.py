@@ -17,7 +17,8 @@ class Role(db.Model):
     """标签表，不同文章可以对应不同的标签"""
     __tablename__ = 'role'
     id = Column(Integer, primary_key=True)
-    name = Column(String(255))
+    name = Column(String(length=255))
+    description = Column(String(length=255))
 
     role = db.relationship(
         'Role',
@@ -25,8 +26,9 @@ class Role(db.Model):
         backref=db.backref('user', lazy='dynamic')
     )
 
-    def __init__(self, name):
+    def __init__(self, name, description=''):
         self.name = name
+        self.description = description
 
     def __repr__(self):
         return "<Model Role `{}`>".format(self.name)

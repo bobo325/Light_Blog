@@ -13,7 +13,7 @@ from flask_bcrypt import Bcrypt
 # Create the Flask-Bcrpyt's instance
 from flask_login import LoginManager
 from flask_oauth import OAuth
-
+from flask_principal import Principal, Permission, RoleNeed
 
 bcrypt = Bcrypt()
 
@@ -61,3 +61,25 @@ def load_user(user_id):  # 需要定义一个 LoginManager.user_loader 回调函
     """Load the user's info."""
     from light_blog.model.user import User
     return User.query.filter_by(id=user_id).first()
+
+
+# 创建principal权限实例
+principal = Principal()
+# 注册三种RoleNeed权限，与表中名称相对应
+admin_permission = Permission(RoleNeed('admin'))
+poster_permission = Permission(RoleNeed('poster'))
+default_permission = Permission(RoleNeed('default'))
+
+
+
+
+
+
+
+
+
+
+# 以下为注释功能
+# reCAPTCHA
+# Flask-Principal
+# facebook login

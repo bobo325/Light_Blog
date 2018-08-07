@@ -8,6 +8,7 @@
 
 from flask import url_for, flash, render_template, request, session, current_app
 from flask_login import logout_user
+from flask_principal import identity_changed, AnonymousIdentity
 from werkzeug.utils import redirect
 
 from light_blog.extensions import qq
@@ -31,9 +32,11 @@ from light_blog.route import account_blueprint
 def logout():
     """View function for logout."""
     logout_user()    # 将用户从session中删除
+
     # identity_changed.send(
     #     current_app._get_current_object(),
-    #     identity=AnonymousIdentity())
+    #     identity=AnonymousIdentity())  # 将用户身份变为匿名身份
+
     flash("You have been logged out.", category="success")
     return redirect(url_for('account.login'))
 
