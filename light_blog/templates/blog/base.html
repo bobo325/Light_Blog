@@ -43,7 +43,7 @@
           <a href="{{ url_for('blog.home', page=pagination.next().page )
             }}" aria-label="Next">
           {% else %}
-          <a href="{{ url_for('blog.home', page=10) }}" aria-label="Next">
+          <a href="" aria-label="Next">
           {% endif %}
             <span aria-label="true">&raquo;</span>
           </a>
@@ -57,12 +57,17 @@
 <body>
     <div class="container">
         <div class="jumbotron">
+            <div class="column" style="float:right">
+                <div class="col-lg-2">
+                    <a href="{{ url_for('account.logout') }}" class="btn btn-primary">Logout </a>
+                </div>
+            </div>
             <!-- Replace the route function to URL:'/'-->
-            <h1><a href="{{ url_for('blog.home', page=1)}}">BOBO'Blog</a> </h1>
-            <p>Welcome To BOBO's new Blog</p>
+            <h1><a href="{{ url_for('blog.home', page=1)}}">Bo~Blog</a> </h1>
+            <p>Welcome To BOBO's  Blog</p>
         </div>
         {% block body %}
-            body_content
+            Null
         {% endblock %}
     </div>
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
