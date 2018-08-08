@@ -76,7 +76,10 @@ def post(post_id):
         db.session.add(new_comment)
         db.session.commit()
         flash('We have receive your comment, Thanks !', category='success')
-    post = db.session.query(Post).get_or_404(post_id)
+    post = Post.query.filter(Post.id == post_id, Post.is_delete.is_(False)).one_or_none()  # db.session.query(Post).get_or_404(post_id)
+    if not post:
+        flash('The post has been deleted !', category='error')
+        return redirect(url_for('blog.home'))
     tags = post.tag  # 关联外键 一对多查询简化
     comments = post.comment.order_by(Comment.date.desc()).all()
     recent, top_tags = sidebar_data()

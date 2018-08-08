@@ -4,6 +4,10 @@
 
 <!-- Replace the body of template base.html -->
 {% block body %}
+     <span style="font-size: 16px;color: purple;line-height: 10px">
+    {% for message in get_flashed_messages() %}
+    	{{ message }}
+    {% endfor %}</span>
 <!-- The data object from view function 'home()'-->
 <div class="row">
     <div class="col-lg-9">
