@@ -58,7 +58,14 @@
     </div>
     <input class="btn btn-primary" type="submit" value="Add Comment">
   </form>
-
+</div>
+<div style="clear: both">   {# 清除下浮动先 #}
+{% if comments %}
+    {% for comment in comments %}
+        <span style="font-size: 20px;color: #721c24;margin-top:5px">{{ comment.name }}</span>({{ comment.date }}) <b>:</b>
+        <span style="font-size: 18px;color:plum;margin-top:5px">{{ comment.text }}</span><br>
+     {% endfor %}
+{% endif %}
 </div>
 {% endblock %}
 
