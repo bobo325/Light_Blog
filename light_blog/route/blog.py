@@ -148,7 +148,7 @@ def edit_post(id):
 
     post = Post.query.get_or_404(id)
     if post.user_id != current_user.id:
-        flash('You are not the author!.', category="error")
+        flash('WARN: you are not the author !', category="error")
         return redirect(url_for('blog.post', post_id=post.id))
     form = PostForm()
 
@@ -176,7 +176,7 @@ def delete_post(id):
     post = Post.query.get_or_404(id)
 
     if post.user_id != current_user.id:
-        flash('Your have no right to delete.', category="error")
+        flash('WARN: your have no right to delete!', category="error")
         return redirect(url_for('blog.post', post_id=post.id))
     post.is_delete = True
     db.session.commit()
