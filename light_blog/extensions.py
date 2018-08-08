@@ -5,12 +5,11 @@
 @author: Chenbo
 @time: 2018/7/28 11:53
 """
-import os
 
 from flask import session
 from flask_bcrypt import Bcrypt
 
-# Create the Flask-Bcrpyt's instance
+from flask_celery import Celery
 from flask_login import LoginManager
 from flask_oauth import OAuth
 from flask_principal import Principal, Permission, RoleNeed
@@ -71,8 +70,8 @@ poster_permission = Permission(RoleNeed('poster'))
 default_permission = Permission(RoleNeed('default'))
 
 
-
-
+# 创建celery对象
+flask_celery = Celery()
 
 
 
