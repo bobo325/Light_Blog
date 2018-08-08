@@ -52,9 +52,7 @@ def register():
                         password=form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('Your user has been created, please login.', category="success")
         return redirect(url_for('account.login'))
-    flash('Your user created failed, please try again.', category="error")
     return render_template('register.html',
                            form=form)
 
