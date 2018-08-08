@@ -15,15 +15,30 @@
     }}">
     {{ form.hidden_tag() }}
     <div> 
-      {{ form.username.label }}                                            
+      {{ form.username.label }}
+        {% if form.username.errors %}
+        {% for e in form.username.errors %}
+          <p class="help-block" style="color: red">{{ e }}</p>
+        {% endfor %}
+      {% endif %}
       {{ form.username(class_="form-control") }}                           
     </div>
     <div class="form-group">                                               
-      {{ form.password.label }}                                            
+      {{ form.password.label }}
+        {% if form.password.errors %}
+        {% for e in form.password.errors %}
+          <p class="help-block" style="color: red">{{ e }}</p>
+        {% endfor %}
+      {% endif %}
       {{ form.password(class_='form-control') }}                           
     </div>
     <div class="form-group">
       {{ form.comfirm.label }}
+        {% if form.comfirm.errors %}
+        {% for e in form.comfirm.errors %}
+          <p class="help-block" style="color: red">{{ e }}</p>
+        {% endfor %}
+      {% endif %}
       {{ form.comfirm(class_='form-control') }}                            
     </div>
     <input class="btn btn-primary" type="submit" value="Register">         
