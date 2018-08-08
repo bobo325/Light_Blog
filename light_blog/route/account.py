@@ -37,7 +37,6 @@ def logout():
     #     current_app._get_current_object(),
     #     identity=AnonymousIdentity())  # 将用户身份变为匿名身份
 
-    flash("You have been logged out.", category="success")
     return redirect(url_for('account.login'))
 
 
