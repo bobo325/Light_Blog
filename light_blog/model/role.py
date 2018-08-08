@@ -20,12 +20,6 @@ class Role(db.Model):
     name = Column(String(length=255))
     description = Column(String(length=255))
 
-    role = db.relationship(
-        'Role',
-        secondary=user_role,
-        backref=db.backref('user', lazy='dynamic')
-    )
-
     def __init__(self, name, description=''):
         self.name = name
         self.description = description
