@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  {# 最高级模式渲染文档 #}
+    <meta name="viewport" content="width=device-width,, initial-scale=1">  {# 适应手机尺寸 #}
+    <!-- Will be replace the page title -->
+    <title>{% block title %}Home{% endblock %}</title>    <!--块可以被子模板中相同名字的块替换(继承)。-->
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Macro: 'render paginate' 需要定义在头部-->
+    {% macro render_pagination(pagination, endpoint) %}
+    <nav>
+      <ul class="pagination">
+        <li>
+        {% if pagination.has_prev %}
+          <a href="{{ url_for('blog.tag', tag_name=top_tags.name, page=pagination.prev().page)
+            }}" aria-label="Previous">
+        {% else %}
+          <a href="{{ url_for('blog.tag', tag_name=top_tags.name, page=1) }}" aria-label="Previous">
+        {% endif %}
+            <span aria-label="true">&laquo;</span>
+          </a>
+        </li>
+        {% for page in pagination.iter_pages() %}
+          {% if page %}
+            {% if page != pagination.page %}
+              <li>
+                <a href="{{ url_for('blog.'+endpoint, tag_name=top_tags.name, page=page) }}">
+                  {{ page }}
+                </a>
+              </li>
+            {% else %}
+              <li><a href="">{{ page }}</a></li>
+            {% endif %}
+          {% else %}
+            <li><a>...</a></li>
+          {% endif %}
+        {% endfor %}
+        <li>
+          {% if pagination.has_next %}
+          <a href="{{ url_for('blog.tag',tag_name=top_tags.name, page=pagination.next().page )
+            }}" aria-label="Next">
+          {% else %}
+          <a href="" aria-label="Next">
+          {% endif %}
+            <span aria-label="true">&raquo;</span>
+          </a>
+        <li>
+      </ul>
+    </nav>
+  {% endmacro %}
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="column" style="float:right">
+                <div class="col-lg-2">
+                    <a href="{{ url_for('account.logout') }}" class="btn btn-primary">Logout </a>
+                </div>
+            </div>
+            <!-- Replace the route function to URL:'/'-->
+            <h1><a href="{{ url_for('blog.home', page=1)}}">Bo~Blog</a> </h1>
+            <p>Welcome To BOBO's  Blog</p>
+        </div>
+        {% block body %}
+            Null
+        {% endblock %}
+    </div>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</body>
+</html>
+
+{#
+NOTE 1: 上述代码段中 {% block XXX %}old{% endblock %} 控制代码块的意义是标识出了该 Jinja 模板中可以被替换的部分. 在子模板继承时, 可以在子模版中实现 {% block XXX %}new{% endblock %} 语句，把父模板中的 block 控制代码块替换掉.
+NOTE 2: 上述的代码中定义了一个宏 render_pagination(pagination, endpoint), 用于生成 Bootstrap 风格的分页链接列表. 宏定义要位于 HTML 代码的头部 <head>.
+pagination: SQLAlchemy 的分页对象 flask_sqlalchemy.Pagination object
+endpoint: 视图函数名(EG. post())
+#}

@@ -1,5 +1,5 @@
 <!-- Replace the Title of template base.html -->
-{% extends "base.html" %}
+{% extends "paginate_base.html" %}
 {% block title %}Bo~Blog{% endblock %}
 
 <!-- Replace the body of template base.html -->
@@ -38,17 +38,13 @@
             </ul>
         </div>
         <div class="row">
-            <h5>Popular Tags</h5>
+            <h5>Tag</h5>
             <ul>
-                {% for tag in top_tags %}
-                <li><a href="{{
-                        url_for('blog.tag',tag_name=tag[0].name,page=1)
-                        }}">{{ tag[0].name }}</a></li>
-                {% endfor %}
+                <li><a href="">{{ top_tags.name }}</a></li>
             </ul>
         </div>
     </div>
 <!-- Call the Macro: 'render_pagination' from base.html-->
-{{ render_pagination(post,'home') }}  <!-- 使用宏(导航栏)，相当于定义函数 -->
+{{ render_pagination(post,'tag') }}  <!-- 使用宏(导航栏)，相当于定义函数 -->
 </div>
 {% endblock %}
