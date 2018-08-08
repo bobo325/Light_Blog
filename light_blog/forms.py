@@ -39,11 +39,11 @@ class LoginForm(FlaskForm):
 
         user = User.query.filter_by(username=self.username.data).first()
         if not user:
-            self.username.errors.append('Invalid username or password.')
+            self.username.errors.append('Invalid UserName.')
             return False
 
         if not user.check_password(self.password.data):
-            self.password.errors.append('Invalid username or password.')
+            self.password.errors.append('Invalid Password.')
             return False
         return True
 
