@@ -98,10 +98,7 @@ def tag(tag_name, page=1):
     """View function for tag page"""
 
     tagz = db.session.query(Tag).filter_by(name=tag_name).first_or_404()
-    # post = Post.query.join(post_tag, Post.id == post_tag.post_id).\
-    #     filter(post_tag.tag_id == tag.id, Post.is_delete.is_(False)).\
-    #     order_by(Post.publish_date.desc()).all()
-    postz = tagz.post.order_by(
+    postz = tagz.post.filter(Post.is_delete.is_(False)).order_by(
         Post.publish_date.desc()
     ).paginate(page, 10)
     recent, _ = sidebar_data()
@@ -117,7 +114,7 @@ def tag(tag_name, page=1):
 def user(username, page=1):
     """View function for user page"""
     user = db.session.query(User).filter_by(username=username).first_or_404()
-    post = user.post.order_by(Post.publish_date.desc()).paginate(page, 10)
+    post = user.post.filter(Post.is_delete.is_(False)).order_by(Post.publish_date.desc()).paginate(page, 10)
     recent, _ = sidebar_data()
 
     return render_template('user.html',
