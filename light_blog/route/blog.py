@@ -112,19 +112,18 @@ def tag(tag_name, page=1):
                            top_tags=tagz)
 
 
-@blog_blueprint.route('/user/<string:username>')
+@blog_blueprint.route('/user/<string:username>/<int:page>')
 @login_required
-def user(username):
+def user(username, page=1):
     """View function for user page"""
     user = db.session.query(User).filter_by(username=username).first_or_404()
-    posts = user.post.order_by(Post.publish_date.desc()).all()
-    recent, top_tags = sidebar_data()
+    post = user.post.order_by(Post.publish_date.desc()).paginate(page, 10)
+    recent, _ = sidebar_data()
 
     return render_template('user.html',
                            user=user,
-                           posts=posts,
-                           recent=recent,
-                           top_tags=top_tags)
+                           post=post,
+                           recent=recent)
 
 
 @blog_blueprint.route('/new', methods=['GET', 'POST'])
