@@ -74,11 +74,13 @@ def post(post_id):
                               date=datetime.datetime.now(),
                               post_id=post_id)
         db.session.add(new_comment)
+        db.session.commit()
+        flash('We have receive your comment, Thanks !', category='success')
     post = db.session.query(Post).get_or_404(post_id)
     tags = post.tag  # 关联外键 一对多查询简化
     comments = post.comment.order_by(Comment.date.desc()).all()
     recent, top_tags = sidebar_data()
-    db.session.commit()
+
     return render_template('post.html',
                            post=post,
                            tags=tags,
