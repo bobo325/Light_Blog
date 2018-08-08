@@ -30,12 +30,11 @@ from light_blog.model.user import User
 from light_blog.route import blog_blueprint
 
 
-# @app.route('/test')
 def sidebar_data():
     """Set the sidebar function."""
 
     # get post of recent
-    recent = Post.query.order_by(Post.publish_date.desc()).\
+    recent = Post.query.filter(Post.is_delete.is_(False)).order_by(Post.publish_date.desc()).\
         limit(5).all()
 
     # get tags and sort by count of posts.
@@ -44,24 +43,12 @@ def sidebar_data():
     return recent, top_tags
 
 
-# @blog_blueprint.route('/')
-# def hello_world():
-#     top_tags = db.session.query(Tag, func.count(post_tag.c.post_id).label('total')). \
-#         join(post_tag).group_by(Tag).order_by('total DESC').limit(5).all()
-#     for one in top_tags:
-#         print(top_tags)
-#         print(one)
-#         print(one[0])
-#     return render_template("index.html")
-
-
 # 查询文章列表
 @blog_blueprint.route('/')      # app.route() 函数中可以定义多样的 URL 路由规则, 也可以为一个视图函数定义多条 URL 路由规则,
                                 # 在这个 Blog 项目中的 URL 设计应该遵循 RESLful 风格
 @blog_blueprint.route('/<int:page>')
 def home(page=1):
     """View function for home page"""
-
     post = Post.query.filter(Post.is_delete.is_(False)).order_by(
         Post.publish_date.desc()
     ).paginate(page, 10)
@@ -158,7 +145,7 @@ def edit_post(id):
 
     post = Post.query.get_or_404(id)
     if post.user_id != current_user.id:
-        flash('Your user created failed, please try again.', category="error")
+        flash('You are not the author!.', category="error")
         return redirect(url_for('blog.post', post_id=post.id))
     form = PostForm()
 
@@ -184,7 +171,7 @@ def delete_post(id):
     """View function for edit_post."""
 
     post = Post.query.get_or_404(id)
-    print(id)
+
     if post.user_id != current_user.id:
         flash('Your have no right to delete.', category="error")
         return redirect(url_for('blog.post', post_id=post.id))
