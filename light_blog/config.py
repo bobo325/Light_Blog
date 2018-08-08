@@ -15,6 +15,7 @@ class Config(object):
     RECAPTCHA_PUBLIC_KEY = "6LcWCmgUAAAAAJ65XRBGvV3hOEjgrOJMloq7c8HO"
     RECAPTCHA_PRIVATE_KEY = "6LcWCmgUAAAAADiamtF6IyUe_GEL4hDYaND3xpoo"
 
+
 class ProdConfig(Config):
     """Production config class."""
     pass
@@ -26,6 +27,9 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@localhost:3306/light_blog"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Celery < -- > RabbitMQ connection
+    CELERY_RESULT_BACKEND = "amqp://guest:guest@localhost:15672//"
+    CELERY_BROKER_URL = "amqp://guest:guest@localhost:15672//"
 
 # import os
 #
