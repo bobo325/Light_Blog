@@ -65,7 +65,7 @@ class RegisterForm(FlaskForm):
         # Check the user whether already exist.
         user = User.query.filter_by(username=self.username.data).first()
         if user:
-            self.username.errors.append('User with that name already exists.')
+            self.username.errors.append('User with the name already exists.')
             return False
         return True
 
