@@ -8,7 +8,7 @@
 from datetime import datetime
 
 from marshmallow import Schema, fields, post_load
-from sqlalchemy import DateTime, Column, String, Text, Integer
+from sqlalchemy import DateTime, Column, String, Text, Integer, Boolean
 
 from light_blog.model import db
 from light_blog.model.post_tag import post_tag
@@ -23,6 +23,7 @@ class Post(db.Model):
     publish_date = Column(DateTime, default=datetime.now())
     # Set the foreign key for Post
     user_id = Column(Integer(), db.ForeignKey('user.id'))  # 外键foreignKey
+    is_delete = Column(Boolean, default=False)
     # 如果没指定__tablename__属性，那么上一句:ForeignKey('User.id'),即和py文件对应
     comment = db.relationship(
         'Comment',
@@ -40,6 +41,7 @@ class Post(db.Model):
         self.text = text
         self.publish_date = publish_date
         self.user_id = user_id
+        self.is_delete = False
 
     def __repr__(self):
         return "<Model Post `{}`>".format(self.title)
@@ -55,6 +57,7 @@ class PostSchema(Schema):
     text = fields.String()  # default='chenbo'
     publish_date = fields.DateTime(format='%Y-%m-%d %H:%M:%S')
     user_id = fields.Integer()
+    is_delete = fields.Boolean()
 
     @post_load
     def make_entity(self, data):
