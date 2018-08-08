@@ -15,6 +15,7 @@ from light_blog.model import db
 from marshmallow import Schema, fields, post_load
 
 from light_blog.model.role import Role
+from light_blog.model.user_role import user_role
 
 
 class User(db.Model):
@@ -29,6 +30,11 @@ class User(db.Model):
         'Post',
         backref='user',
         lazy='dynamic'
+    )
+    role = db.relationship(
+        'Role',
+        secondary=user_role,
+        backref=db.backref('user', lazy='dynamic')
     )
 
     def __init__(self, username, password):
