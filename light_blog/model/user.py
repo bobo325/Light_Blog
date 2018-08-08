@@ -37,7 +37,7 @@ class User(db.Model):
 
         # 每一个新创建的用户都有这个默认角色
         default = Role.query.filter_by(name='default').one()
-        self.roles.append(default)
+        self.role.append(default)
 
     def __repr__(self):
         """Define the string format for instance of User."""
