@@ -7,7 +7,12 @@
     <meta name="viewport" content="width=device-width,, initial-scale=1">  {# 适应手机尺寸 #}
     <!-- Will be replace the page title -->
     <title>{% block title %}Home{% endblock %}</title>    <!--块可以被子模板中相同名字的块替换(继承)。-->
-
+    <style type="text/css">
+        body {
+            background: url('/static/file/background.jpg') no-repeat;
+            background-size: cover;
+            }
+    </style>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Macro: 'render paginate' 需要定义在头部-->
     {% macro render_pagination(pagination, endpoint) %}
