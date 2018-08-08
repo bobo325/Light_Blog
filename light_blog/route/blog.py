@@ -93,12 +93,15 @@ def tag(tag_name):
     """View function for tag page"""
 
     tag = db.session.query(Tag).filter_by(name=tag_name).first_or_404()
-    posts = tag.post.order_by(Post.publish_date.desc()).all()
+    post = tag.post.order_by(Post.publish_date.desc()).all()
+    # post = Post.query.join(post_tag, Post.id == post_tag.post_id).\
+    #     filter(post_tag.tag_id == tag.id, Post.is_delete.is_(False)).\
+    #     order_by(Post.publish_date.desc()).all()
     recent, top_tags = sidebar_data()
 
     return render_template('tag.html',
                            tag=tag,
-                           posts=posts,
+                           post=post,
                            recent=recent,
                            top_tags=top_tags)
 
@@ -177,11 +180,12 @@ def delete_post(id):
         return redirect(url_for('blog.post', post_id=post.id))
     post.is_delete = True
     db.session.commit()
-    post = Post.query.order_by(
-        Post.publish_date.desc()
-    ).paginate(1, 10)
-    recent, top_tags = sidebar_data()
-    return render_template('home.html',
-                           post=post,
-                           recent=recent,
-                           top_tags=top_tags)
+    # post = Post.query.order_by(
+    #     Post.publish_date.desc()
+    # ).paginate(1, 10)
+    # recent, top_tags = sidebar_data()
+    # return render_template('home.html',
+    #                        post=post,
+    #                        recent=recent,
+    #                        top_tags=top_tags)
+    return redirect(url_for('blog.home'))    # 才发现，原来url_for里面对应的是函数的名字而不是访问路由路径
