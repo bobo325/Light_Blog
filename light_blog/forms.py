@@ -8,6 +8,7 @@
   # 更具有安全性
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, PasswordField, TextAreaField, BooleanField
+from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 from light_blog.model.user import User
@@ -51,6 +52,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     """Register Form"""
     username = StringField('Username', [DataRequired(), Length(max=255)])
+    email = EmailField('Email', [DataRequired()])
     password = PasswordField('Password', [DataRequired(), Length(min=8)])
     comfirm = PasswordField('Confirm Password', [DataRequired(), EqualTo('password')])
     # recaptcha = RecaptchaField()  # TODO 正式环境还要修改应用域名
