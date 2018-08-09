@@ -23,6 +23,16 @@
       {% endif %}
       {{ form.username(class_="form-control") }}                           
     </div>
+  <!-- 邮箱 -->
+  <div class="form-group">
+      {{ form.email.label }}
+        {% if form.email.errors %}
+        {% for e in form.email.errors %}
+          <p class="help-block" style="color: red">{{ e }}</p>
+        {% endfor %}
+      {% endif %}
+      {{ form.email(class_='form-control') }}
+    </div>
     <div class="form-group">                                               
       {{ form.password.label }}
         {% if form.password.errors %}
