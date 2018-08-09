@@ -12,13 +12,16 @@ import os
 from flask_login import login_user, current_user
 from flask_openid import OpenID
 from flask_principal import identity_loaded, UserNeed, RoleNeed, identity_changed, Identity
+from sqlalchemy import event
 
 from light_blog import config
 from light_blog.extensions import bcrypt, login_manager, principal, flask_celery
 from light_blog.forms import LoginForm
+from light_blog.model.reminder import Reminder
 from light_blog.model.user import User
 from light_blog.route import blog_blueprint, account_blueprint
 from light_blog.model import db
+from light_blog.tasks import on_reminder_save
 
 
 def create_app(object_name):
@@ -31,7 +34,7 @@ def create_app(object_name):
     app.config.from_object(object_name)
 
     # views = __import__('light_blog.route.blog')  #有了蓝本注册之后就不需要import了
-
+    event.listen(Reminder, 'after_insert', on_reminder_save)
     # sqlalchemy绑定app
     db.init_app(app)
     bcrypt.init_app(app)  # bcrypt 也是通过在app注册的
