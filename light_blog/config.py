@@ -28,8 +28,13 @@ class DevConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Celery < -- > RabbitMQ connection
-    CELERY_RESULT_BACKEND = "amqp://guest:guest@localhost:5672//"
+    CELERY_RESULT_BACKEND =  "amqp://guest:guest@localhost:5672//"    # TODO 上线得重新设置
     CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672//"
+
+
+ACCOUNT = "1126531273@qq.com"
+PASSWORD = "lbaucstdiigjjefc"  # 第三方客户登陆密码
+EMAIL_CONTEXT = "终于等到您！欢迎来到博客的全新世界!"
 
 # import os
 #
