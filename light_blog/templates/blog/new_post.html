@@ -1,13 +1,25 @@
-{% block title %}New Post{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body {
+            background: url('/static/file/background.jpg') no-repeat;
+            background-size: cover;
+            }
+    </style>
+
+    <title>New Post</title>
+</head>
 {% block body %}
 
 <div class="row">
-  <h1 style="text-align: center">Create A New Post</h1>
+  <h1 style="text-align: center; color: #f1b0b7;">Create A New Post</h1>
   <form method="POST" action="{{ url_for('blog.new_post') }}">
     {{ form.hidden_tag() }}
     <div class="form-group">
-      {{ form.title.label }}<br>
+      <span style="color: #f1b0b7; font-size: 23px;font-weight: bolder;">{{ form.title.label }}</span><br>
       {% if form.title.errors %}
         {% for e in form.title.errors %}
           <p class="help-block">{{ e }}</p>
@@ -16,7 +28,7 @@
       {{ form.title(class_='form-control') }}
     </div><br>
     <div class="form-gruop">
-      {{ form.text.label }}
+      <span style="color: #f1b0b7; font-size: 23px;font-weight: bolder;">{{ form.text.label }}:</span>
       {% if form.text.errors %}
         {% for e in form.text.errors %}
           <p class="help-block">{{ e }}</p>
@@ -24,7 +36,7 @@
       {% endif %}
       {{ form.text(id="editor", class_='form-contril') }}
     </div><br>
-    <input class="btn-primary" type="submit" value="Submit">
+     <input class="btn-primary" type="submit" value="Submit" style="font-size: 18px; font-weight: bold;background-color: #f1b0b7;color: #721c24">
   </form>
 </div>
 {% endblock %}
@@ -33,7 +45,7 @@
     {#模板 new_post 和 edit_post 中都加入了一个所见即所得 (WYSIWYG) 的博客文章
     编辑器 CKEditor, 该编辑器是一个 JavaScript 文件
     <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>,
-    CKEditor 的安装和使用都是非常方便的#}.
+    CKEditor 的安装和使用都是非常方便的.#}
 <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('editor');
