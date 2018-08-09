@@ -28,8 +28,8 @@ class DevConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Celery < -- > RabbitMQ connection
-    CELERY_RESULT_BACKEND = "amqp://guest:guest@localhost:15672//"
-    CELERY_BROKER_URL = "amqp://guest:guest@localhost:15672//"
+    CELERY_RESULT_BACKEND = "amqp://guest:guest@localhost:5672//"
+    CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672//"
 
 # import os
 #
