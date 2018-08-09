@@ -1,21 +1,34 @@
-{% block title %}Edit Post{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body {
+            background: url('/static/file/background.jpg') no-repeat;
+            background-size: cover;
+            }
+    </style>
+
+    <title>Edit Post</title>
+</head>
 
 {% block body %}
 <div class="row">
-  <h1 style="text-align: center">Edit the Post</h1>
+  <h1 style="text-align: center; color: #f1b0b7;">Edit the Post</h1>
   <form method="POST" action="{{ url_for('blog.edit_post', id=post.id) }}">
     {{ form.hidden_tag() }}
     <div class="form-group">
-      {{ form.title.label }}<br>
+        <span style="color: #f1b0b7; font-size: 23px;font-weight: bolder;">{{ form.title.label }}</span><br>
       {% if form.title.errors %}
         {% for e in form.title.errors %}
           <p class="help-block">{{ e }}</p>
         {% endfor %}
       {% endif %}
-      {{ form.title(class_='form-control', value=post.title) }}
+        {{ form.title(class_='form-control', value=post.title) }}
     </div><br>
     <div class="form-gruop">
-      {{ form.text.label }}
+        <span style="color: #f1b0b7; font-size: 23px;font-weight: bolder;">{{ form.text.label }}:</span>
       {% if form.text.errors %}
         {% for e in form.text.errors %}
           <p class="help-block">{{ e }}</p>
@@ -23,7 +36,7 @@
       {% endif %}
       {{ form.text(id="editor", class_='form-contril') }}
     </div><br>
-    <input class="btn-primary" type="submit" value="Submit">
+   <input class="btn-primary" type="submit" value="Submit" style="font-size: 18px; font-weight: bold;background-color: #f1b0b7;color: #721c24">
   </form>
 </div>
 {% endblock %}
