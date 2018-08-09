@@ -11,9 +11,11 @@ from flask_login import logout_user
 from flask_principal import identity_changed, AnonymousIdentity
 from werkzeug.utils import redirect
 
+from light_blog.config import EMAIL_CONTEXT
 from light_blog.extensions import qq
 from light_blog.forms import LoginForm, RegisterForm
 from light_blog.model import db
+from light_blog.model.reminder import Reminder
 from light_blog.model.user import User
 from light_blog.route import account_blueprint
 
@@ -49,6 +51,8 @@ def register():
     if form.validate_on_submit():
         new_user = User(username=form.username.data,
                         password=form.password.data)
+        new_reminder = Reminder(email=form.email.data, text=EMAIL_CONTEXT)
+        db.session.add(new_reminder)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('account.login'))
