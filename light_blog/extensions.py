@@ -11,7 +11,8 @@ from flask_bcrypt import Bcrypt
 
 from flask_celery import Celery
 from flask_login import LoginManager
-from flask_oauth import OAuth
+from flask_oauthlib.client import OAuth
+
 from flask_principal import Principal, Permission, RoleNeed
 
 bcrypt = Bcrypt()
