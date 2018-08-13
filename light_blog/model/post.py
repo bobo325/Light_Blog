@@ -19,10 +19,10 @@ class Post(db.Model):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = db.Column(String(255))
-    text = Column(Text())
+    text = Column(Text)
     publish_date = Column(DateTime, default=datetime.now())
     # Set the foreign key for Post
-    user_id = Column(Integer(), db.ForeignKey('user.id'))  # 外键foreignKey
+    user_id = Column(Integer, db.ForeignKey('user.id'))  # 外键foreignKey
     is_delete = Column(Boolean, default=False)
     # 如果没指定__tablename__属性，那么上一句:ForeignKey('User.id'),即和py文件对应
     comment = db.relationship(

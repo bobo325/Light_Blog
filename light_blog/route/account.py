@@ -71,7 +71,7 @@ def facebook_login():
 
 # 该视图接受从facebook认证服务器返回的resp对象
 @account_blueprint.route('/facebook_authorized')   # 修改应用域名到线上环境 配置Facebook配置
-@qq.authorized_handler
+# @qq.authorized_handler
 def facebook_authorized(resp):
     if resp is None:
         return 'Access denied: reason=%s error=%s' % (
