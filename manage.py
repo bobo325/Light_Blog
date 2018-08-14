@@ -26,7 +26,7 @@ migrate = Migrate(app, model.db)
 
 # Create a new commands: server
 # This command will be run the Flask development_env server
-manager.add_command("server", Server(host='0.0.0.0', port=6666))
+manager.add_command("server", Server(host='0.0.0.0', port=7777))
 manager.add_command("db", MigrateCommand)
 
 
