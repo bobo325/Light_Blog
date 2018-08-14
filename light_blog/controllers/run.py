@@ -32,16 +32,16 @@ def create_app(object_name):
     app = Flask(__name__, static_url_path='/static', static_folder=static_path)
 
     app.config.from_object(object_name)
-
+    # sqlalchemy 绑定app
+    db.init_app(app)
+    flask_celery.init_app(app)
     # views = __import__('light_blog.route.blog')  #有了蓝本注册之后就不需要import了
     event.listen(Reminder, 'after_insert', on_reminder_save)
-    # sqlalchemy绑定app
-    db.init_app(app)
+
     bcrypt.init_app(app)  # bcrypt 也是通过在app注册的
     login_manager.init_app(app)
     openid = OpenID(app, os.path.join(os.path.dirname(__file__), 'tmp'))
     principal.init_app(app)
-    flask_celery.init_app(app)
 
     @account_blueprint.route('/login', methods=['GET', 'POST'])
     @openid.loginhandler
