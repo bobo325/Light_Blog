@@ -24,9 +24,9 @@ def make_celery(app):
     # Flask-Celery-Helper to auto-setup the config.
     # import  pdb
     # pdb.set_trace()
-    cfg = dict([(k.lower(), v) for k, v in app.config.items()])
+    # cfg = dict([(k.lower(), v) for k, v in app.config.items()])
 
-    celery.conf.update(cfg)
+    celery.conf.update(app.config)
     TaskBase = celery.Task
 
     class ContextTask(TaskBase):
