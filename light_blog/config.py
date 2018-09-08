@@ -28,8 +28,8 @@ class DevConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Celery < -- > RabbitMQ connection
-    CELERY_RESULT_BACKEND =  "amqp://guest:guest@121.42.195.83:5672//"    # TODO 上线得重新设置
-    CELERY_BROKER_URL = "amqp://guest:guest@121.42.195.83:5672//"
+    CELERY_RESULT_BACKEND =  "amqp://guest:guest@rabbitmq:5672//"    # TODO 上线得重新设置
+    CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672//"
 
 
 ACCOUNT = "1126531273@qq.com"
