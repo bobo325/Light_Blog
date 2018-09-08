@@ -1,0 +1,53 @@
+version: '1.0'
+services:
+  light_blog:
+    image: ---
+    stdin_open: true
+    tty: true
+    restart: always
+    ports:
+      - "": ""
+      - "": ""
+    environment:
+      PROJECT_NAME: Light_Blog
+      SYSLOG_HOST: ---
+      SYSLOG_PORT: ---
+      SYSLOG_LEVEL: DEBUG
+      CONFIG: ---
+    links:
+      - light_blog_mysql: mysql
+      - light_blog_mq: rabbitmq
+    volumes:
+      - 
+      -
+      -
+    labels:
+  light_blog_mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: light_blog
+      MYSQL_PASSWORD: chenbo
+      MYSQL_USER: root
+    stdin_open: true
+    tty: true
+    restart: always
+    volumes:
+      ---
+    labels:
+      ---
+      ---
+      ---
+    light_blog_mq:
+      image: rabbitmq
+      environment:
+        RABBITMQ_DEFAULT_USER: chenbo
+        RABBITMQ_DEFAULT_PASS: chenbo
+      stdin_open: true
+      tty: true
+      restart: always
+      volumes: 
+        ---
+      labels:
+        ---
+        ---
+
