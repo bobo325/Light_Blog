@@ -9,6 +9,8 @@
 
 class Config(object):
     """Base config class."""
+    HOST = '0.0.0.0'
+    PORT = 5000
     SECRET_KEY = 'imissyou.online'
 
     # reCAPTCHA Public key and Private key
