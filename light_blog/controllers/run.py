@@ -32,6 +32,7 @@ def create_app(object_name):
     app = Flask(__name__, static_url_path='/static', static_folder=static_path)
 
     app.config.from_object(object_name)
+
     # sqlalchemy 绑定app
     db.init_app(app)
     flask_celery.init_app(app)
