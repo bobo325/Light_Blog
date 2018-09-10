@@ -24,12 +24,12 @@ class ProdConfig(Config):
 class DevConfig(Config):
     """Development config class."""
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@121.42.195.83:3306/light_blog"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@121.42.195.83:3308/light_blog"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Celery < -- > RabbitMQ connection
-    CELERY_RESULT_BACKEND =  "amqp://guest:guest@rabbitmq:5672//"    # TODO 上线得重新设置
-    CELERY_BROKER_URL = "amqp://guest:guest@rabbitmq:5672//"
+    CELERY_RESULT_BACKEND =  "amqp://chenbo:chenbo@rabbitmq:5672//"    # TODO 上线得重新设置
+    CELERY_BROKER_URL = "amqp://chenbo:chenbo@rabbitmq:5672//"
 
 
 ACCOUNT = "1126531273@qq.com"
