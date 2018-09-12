@@ -24,7 +24,7 @@ class ProdConfig(Config):
 class DevConfig(Config):
     """Development config class."""
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@121.42.195.83:3308/light_blog"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:chenbo@light_blog_mysql:3306/light_blog"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Celery < -- > RabbitMQ connection

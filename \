@@ -1,0 +1,44 @@
+version: '2.0'
+services:
+  light_blog: 
+    image: light_blog3
+    stdin_open: true
+    tty: true
+    restart: always
+    ports:
+      - 8088:5000
+    environment:
+      PROJECT_NAME: Light_Blog
+      CONFIG: test
+    links:
+      - light_blog_mysql:mysql
+      - light_blog_mq:rabbitmq
+    volumes:
+      - /home/chenbo/Light_Blog/temp/
+
+  light_blog_mysql:
+    image: mysql
+    ports:
+        - 3308:3306
+    volumes:
+      - /home/chenbo/mysqllib:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_DATABASE: light_blog
+      MYSQL_ROOT_PASSWORD: chenbo
+      MYSQL_USER: root
+    stdin_open: true
+    tty: true
+    restart: always
+
+  light_blog_mq:
+    image: rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: chenbo
+      RABBITMQ_DEFAULT_PASS: chenbo
+    stdin_open: true
+    tty: true
+    restart: always
+
