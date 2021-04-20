@@ -44,7 +44,7 @@ pbr==4.2.0
 Pillow==5.2.0
 pluggy==0.6.0
 psycopg2-binary==2.7.4
-py==1.5.4
+py==1.10.0
 pycparser==2.18
 pycryptodome==3.6.1
 pygelf==0.3.3
