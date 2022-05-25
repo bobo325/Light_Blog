@@ -48,7 +48,7 @@ py==1.5.4
 pycparser==2.18
 pycryptodome==3.6.1
 pygelf==0.3.3
-PyJWT==1.5.3
+PyJWT==2.4.0
 PyMySQL==0.9.2
 pytest==3.3.2
 python-dateutil==2.7.3
